@@ -22,6 +22,18 @@ const Home = (props) => {
     props.history.push("/dashboard");
   };
 
+  const handleLogoutClick = () => {
+    axios
+      .delete("http://localhost:3000/logout", { withCredentials: true })
+      .then((response) => {
+        console.log("logout", response);
+        props.handleLogout();
+      })
+      .catch((error) => {
+        console.log("Logout error", error);
+      });
+  };
+
   const handleChange = (event) => {
     console.log("event", event.target.name, event.target.value);
     setInput({
@@ -65,6 +77,7 @@ const Home = (props) => {
         handleSuccessfulAuth={handleSuccessfulAuth}
       />
       <h4>Status: {props.loggedInStatus}</h4>
+      <button onClick={() => handleLogoutClick()}>Logout</button> <br />
       {/* <Login handleSuccessfulAuth={handleSuccessfulAuth} /> */}
       <Link to="/login">Login</Link> <br />
       <Link to="/dashboard">Dashboard</Link>

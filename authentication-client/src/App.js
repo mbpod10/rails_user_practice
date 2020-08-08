@@ -21,6 +21,13 @@ function App() {
         .get("http://localhost:3000/logged_in", { withCredentials: true })
         .then((response) => {
           console.log("logged in?", response);
+          if (response.data.logged_in && loggedIn === "NOT_LOGGED_IN") {
+            setLoggedIn("LOGGED_IN");
+            setUser(response.data.user);
+          } else if (!response.data.logged_in && loggedIn === "LOGGED_IN") {
+            setLoggedIn("NOT_LOGGED_IN");
+            setUser({});
+          }
         })
         .catch((error) => {
           console.log("log in error", error);
@@ -28,6 +35,11 @@ function App() {
     };
     checkLoginStatus();
   }, []);
+
+  const handleLogout = () => {
+    setLoggedIn("NOT_LOGGED_IN");
+    setUser({});
+  };
 
   return (
     <div className="App">
@@ -42,6 +54,7 @@ function App() {
                 user={user}
                 loggedInStatus={loggedIn}
                 handleLogin={handleLogin}
+                handleLogout={handleLogout}
               />
             )}
           />
@@ -59,6 +72,7 @@ function App() {
                 user={user}
                 loggedInStatus={loggedIn}
                 handleLogin={handleLogin}
+                handleLogout={handleLogout}
               />
             )}
           />
