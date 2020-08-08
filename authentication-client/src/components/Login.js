@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import Registration from "../components/auth/Registration";
+import LoginForm from "../components/auth/LoginForm";
 import axios from "axios";
-// import Login from "./Login";
 import { Link } from "react-router-dom";
 
-const Home = (props) => {
+const Login = (props) => {
   //console.log("Add props", props.match.params.id);
   console.log("user", props.user);
   console.log(props);
@@ -12,7 +11,6 @@ const Home = (props) => {
     user: {
       email: "",
       password: "",
-      password_confirmation: "",
     },
   });
   //const [user, setReview] = useState(null);
@@ -35,41 +33,41 @@ const Home = (props) => {
     event.preventDefault();
     axios
       .post(
-        "http://localhost:3000/registrations",
+        "http://localhost:3000/sessions",
         {
           user: {
             email: input.email,
             password: input.password,
-            password_confirmation: input.password_confirmation,
           },
         },
         { withCredentials: true }
       )
       .then((resonse) => {
-        if (resonse.data.status === "created") {
+        if (resonse.data.logged_in) {
           handleSuccessfulAuth(resonse.data);
         }
-        console.log("registration log", resonse);
+        console.log("res from  login", resonse);
       })
       .catch((error) => {
-        console.log("registration error", error);
+        console.log("login error", error);
       });
   };
   return (
     <>
-      <h1>Home</h1>
-      <Registration
+      <h1>Login</h1>
+      <LoginForm
         user={input}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
         handleSuccessfulAuth={handleSuccessfulAuth}
       />
       <h4>Status: {props.loggedInStatus}</h4>
-      {/* <Login handleSuccessfulAuth={handleSuccessfulAuth} /> */}
-      <Link to="/login">Login</Link> <br />
+      <br />
+      {/* <h4>Status: {props.loggedInStatus}</h4> */}
+      <Link to="/">Home</Link> <br />
       <Link to="/dashboard">Dashboard</Link>
     </>
   );
 };
 
-export default Home;
+export default Login;

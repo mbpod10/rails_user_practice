@@ -1,6 +1,6 @@
 import React from "react";
 
-const Registration = ({ user, handleChange, handleSubmit }) => {
+const LoginForm = ({ user, handleChange, handleSubmit }) => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -19,18 +19,10 @@ const Registration = ({ user, handleChange, handleSubmit }) => {
           onChange={handleChange}
           required
         />
-        <label>Confirm Password</label>
-        <input
-          type="password"
-          value={user.password_confirmation}
-          name="password_confirmation"
-          onChange={handleChange}
-          required
-        />
-        <button type="submit">Register</button>
+        <button type="submit">Login</button>
       </form>
     </div>
   );
 };
 
-export default Registration;
+export default LoginForm;
