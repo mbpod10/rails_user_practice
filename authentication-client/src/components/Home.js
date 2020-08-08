@@ -4,7 +4,8 @@ import axios from "axios";
 
 const Home = (props) => {
   //console.log("Add props", props.match.params.id);
-
+  console.log("user", props.user);
+  console.log(props);
   const [input, setInput] = useState({
     user: {
       email: "",
@@ -12,7 +13,12 @@ const Home = (props) => {
       password_confirmation: "",
     },
   });
-  const [user, setReview] = useState(null);
+  //const [user, setReview] = useState(null);
+
+  const handleSuccessfulAuth = (data) => {
+    props.handleLogin(data);
+    props.history.push("/dashboard");
+  };
 
   const handleChange = (event) => {
     console.log("event", event.target.name, event.target.value);
@@ -38,6 +44,9 @@ const Home = (props) => {
         { withCredentials: true }
       )
       .then((resonse) => {
+        if (resonse.data.status === "created") {
+          handleSuccessfulAuth(resonse.data);
+        }
         console.log("registration log", resonse);
       })
       .catch((error) => {
@@ -47,12 +56,13 @@ const Home = (props) => {
   return (
     <>
       <h1>Home</h1>
-      <h1>Page</h1>
       <Registration
         user={input}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
+        handleSuccessfulAuth={handleSuccessfulAuth}
       />
+      <h4>Status: {props.loggedInStatus}</h4>
     </>
   );
 };

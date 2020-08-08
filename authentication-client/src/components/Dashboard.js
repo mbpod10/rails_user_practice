@@ -1,10 +1,11 @@
 import React from "react";
 
-const Dashboard = () => {
+const Dashboard = (props) => {
+  console.log("props", props);
   return (
     <>
       <h1>Dashboard</h1>
-      <h1>Page</h1>
+      <h4>Status: {props.loggedInStatus}</h4>
     </>
   );
 };
