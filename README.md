@@ -19,11 +19,11 @@ a standard MVC app, but not use any of the views, it's going to be treated as AP
 rails db:create
 ```
 
-Install [bcrypt](https://rubygems.org/gems/bcrypt) from rubygems and cors in gem file
+- Install [bcrypt](https://rubygems.org/gems/bcrypt) from rubygems and cors in gem file
 
 ```
 gem 'bcrypt', '~> 3.1', '>= 3.1.15'
 gem "rack-cors", :require => 'rack/cors'
 ```
 
-run `bundle install`
+run `bundle` to install cors and brycrpt
