@@ -13,6 +13,8 @@ rails new authentication_app -d postgresql --skip-git
 skip `-api` flag so you can properly use session for user authentication. This will create
 a standard MVC app, but not use any of the views, it's going to be treated as API only.
 
+THIS WILL GIVE YOU ACCESS TO SESSIONS COOKIES
+
 - Create DataBase
 
 ```
