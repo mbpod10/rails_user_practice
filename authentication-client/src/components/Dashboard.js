@@ -35,23 +35,7 @@ const Dashboard = (props) => {
       ...input,
       [event.target.name]: event.target.value,
     });
-    // setInput((input.user_id = props.user.id));
   };
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   console.log("Handle Submit");
-  //   axios({
-  //     url: `http://localhost:3000/information`,
-  //     method: "POST",
-  //     data: input,
-  //   })
-  //     .then((res) => {
-  //       setInfo({ createdItem: res.data.information });
-  //       // props.history.push(`/products/${props.match.params.id}/reviews`);
-  //     })
-  //     .catch(console.error);
-  // };
 
   const handleSubmit = (event) => {
     console.log("form submitted");
@@ -90,11 +74,15 @@ const Dashboard = (props) => {
       <Link to="/">Home</Link> <br />
       <Link to="/login">Login</Link>
       <h3>Let's Add Some Information</h3>
-      <AddInfo
-        handleChange={handleChange}
-        handleSubmit={handleSubmit}
-        information={input}
-      />
+      {props.user.information == null || props.user.information.length < 0 ? (
+        <AddInfo
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          information={input}
+        />
+      ) : (
+        <h4>You Have Info</h4>
+      )}
       {error ? error : null}
     </>
   );

@@ -7,8 +7,9 @@ const Profile = (props) => {
   const [user, setUser] = useState({});
   const [id, setID] = useState(props.user.id);
   const [information, setInfo] = useState([]);
-  console.log("user", user);
-  console.log("id", id);
+  //   console.log("user", user);
+  //   console.log("id", id);
+  console.log(props);
 
   useEffect(() => {
     setUser(props.user);
@@ -16,7 +17,9 @@ const Profile = (props) => {
     const makeAPICall = async () => {
       //console.log(props.match.params);
       try {
-        const response = await axios(`http://localhost:3000/users/${id}}`);
+        const response = await axios(
+          `http://localhost:3000/users/${props.match.params.id}}`
+        );
         //console.log("response", response);
         console.log("response", response);
         setInfo(response.data.information);
@@ -34,8 +37,8 @@ const Profile = (props) => {
         <h4>Name: {element.name}</h4>
         <h4>Address: {element.address}</h4>
         <h4>Age: {element.age}</h4>
-        <h4>US Citizen: {element.citizen}</h4>
-        <h4>Dependent: {element.dependent}</h4>
+        <h4>US Citizen: {JSON.stringify(element.citizen)}</h4>
+        <h4>Dependent: {JSON.stringify(element.dependent)}</h4>
         <h4>Martial Status: {element.marital_status}</h4>
       </div>
     );

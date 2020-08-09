@@ -78,20 +78,27 @@ const Home = (props) => {
   };
   return (
     <>
-      {props.email ? <h5>{props.email} Logged In</h5> : null}
+      {props.email ? <h5>{props.email} </h5> : null}
       <h1>Home</h1>
-      <Registration
-        user={input}
-        handleChange={handleChange}
-        handleSubmit={handleSubmit}
-        handleSuccessfulAuth={handleSuccessfulAuth}
-      />
+      {props.loggedInStatus === "LOGGED_IN" ? null : (
+        <Registration
+          user={input}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          handleSuccessfulAuth={handleSuccessfulAuth}
+        />
+      )}
       <h4>Status: {props.loggedInStatus}</h4>
       <button onClick={() => handleLogoutClick()}>Logout</button> <br />
       {/* <Login handleSuccessfulAuth={handleSuccessfulAuth} /> */}
-      <Link to="/login">Login</Link> <br />
+      {props.loggedInStatus === "LOGGED_IN" ? null : (
+        <Link to="/login">Login</Link>
+      )}{" "}
+      <br />
       <Link to="/dashboard">Dashboard</Link> <br />
-      <Link to="/profile"> View Profile</Link>
+      {props.loggedInStatus === "LOGGED_IN" ? (
+        <Link to={`/profile/${props.user.id}`}> View Profile</Link>
+      ) : null}
       <h4>{errorStatus}</h4>
     </>
   );
