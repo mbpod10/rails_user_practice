@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import AddInfo from "../components/info/AddInfo";
 import axios from "axios";
@@ -8,7 +8,9 @@ const Dashboard = (props) => {
   const [info, setInfo] = useState(null);
   const [userId, setUserId] = useState(props.user.id);
   // console.log(userId);
-
+  const [error, setError] = useState("");
+  const [user, setUser] = useState({});
+  console.log("usestate user", user);
   const [input, setInput] = useState({
     name: "",
     address: "",
@@ -19,6 +21,13 @@ const Dashboard = (props) => {
   });
 
   console.log(input);
+
+  useEffect(() => {
+    const createUser = () => {
+      setUser(props.user);
+    };
+    createUser();
+  }, []);
 
   const handleChange = (event) => {
     console.log("event", event.target.name, event.target.value);
@@ -47,26 +56,34 @@ const Dashboard = (props) => {
   const handleSubmit = (event) => {
     console.log("form submitted");
     event.preventDefault();
-    axios
-      .post("http://localhost:3000/information", {
-        name: input.name,
-        address: input.address,
-        age: input.age,
-        marital_status: input.marital_status,
-        citizen: false,
-        dependent: false,
-        user_id: props.user.id,
-      })
-      .then((resonse) => {
-        console.log("res from  login", resonse);
-      })
-      .catch((error) => {
-        console.log("login error", error);
-      });
+    setUser(props.user);
+    if (user.information) {
+      setError("You Already Have Information");
+    } else {
+      axios
+        .post("http://localhost:3000/information", {
+          name: input.name,
+          address: input.address,
+          age: input.age,
+          marital_status: input.marital_status,
+          citizen: false,
+          dependent: false,
+          user_id: props.user.id,
+        })
+        .then((resonse) => {
+          console.log("res from  login", resonse);
+          props.history.push("/profile");
+        })
+        .catch((error) => {
+          console.log("login error", error);
+        });
+    }
   };
+  console.log("PROPS USER", user);
 
   return (
     <>
+      {props.email ? <h5>{props.email} Logged In</h5> : null}
       <h1>Dashboard</h1>
       <h4>Status: {props.loggedInStatus}</h4>
       <br />
@@ -78,6 +95,7 @@ const Dashboard = (props) => {
         handleSubmit={handleSubmit}
         information={input}
       />
+      {error ? error : null}
     </>
   );
 };

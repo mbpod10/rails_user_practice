@@ -18,7 +18,8 @@ const Login = (props) => {
 
   const handleSuccessfulAuth = (data) => {
     props.handleLogin(data);
-    props.history.push("/dashboard");
+    window.location.reload();
+    props.history.push("/");
   };
 
   const handleChange = (event) => {
@@ -47,6 +48,8 @@ const Login = (props) => {
         console.log("res from  login", resonse);
         if (resonse.data.logged_in) {
           handleSuccessfulAuth(resonse.data);
+          // window.location.reload();
+          // props.history.push("/");
         } else {
           setErrorStatus(resonse.data.status);
         }
@@ -57,14 +60,18 @@ const Login = (props) => {
   };
   return (
     <>
-      <h1>Login</h1>
-      <LoginForm
-        user={input}
-        handleChange={handleChange}
-        handleSubmit={handleSubmit}
-        handleSuccessfulAuth={handleSuccessfulAuth}
-      />
       <h4>Status: {props.loggedInStatus}</h4>
+      <h1>Login</h1>
+      {props.loggedInStatus === "LOGGED_IN" ? (
+        "Successful Login!"
+      ) : (
+        <LoginForm
+          user={input}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          handleSuccessfulAuth={handleSuccessfulAuth}
+        />
+      )}
       <br />
       {/* <h4>Status: {props.loggedInStatus}</h4> */}
       <Link to="/">Home</Link> <br />

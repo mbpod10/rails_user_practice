@@ -5,10 +5,12 @@ import Home from "./components/Home";
 import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
 import axios from "axios";
+import Profile from "./components/Profile";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState("NOT_LOGGED_IN");
   const [user, setUser] = useState({});
+  const [email, setEmail] = useState("");
 
   const handleLogin = (data) => {
     setLoggedIn("LOGGED_IN");
@@ -24,6 +26,7 @@ function App() {
           if (response.data.logged_in && loggedIn === "NOT_LOGGED_IN") {
             setLoggedIn("LOGGED_IN");
             setUser(response.data.user);
+            setEmail(response.data.user.email);
           } else if (!response.data.logged_in && loggedIn === "LOGGED_IN") {
             setLoggedIn("NOT_LOGGED_IN");
             setUser({});
@@ -40,6 +43,7 @@ function App() {
     setLoggedIn("NOT_LOGGED_IN");
     setUser({});
   };
+  console.log(email);
 
   return (
     <div className="App">
@@ -51,6 +55,7 @@ function App() {
             render={(props) => (
               <Home
                 {...props}
+                email={email}
                 user={user}
                 loggedInStatus={loggedIn}
                 handleLogin={handleLogin}
@@ -61,7 +66,13 @@ function App() {
           <Route
             path="/dashboard"
             render={(props) => (
-              <Dashboard {...props} loggedInStatus={loggedIn} user={user} />
+              <Dashboard
+                {...props}
+                email={email}
+                loggedInStatus={loggedIn}
+                user={user}
+                handleLogin={handleLogin}
+              />
             )}
           />
           <Route
@@ -70,6 +81,20 @@ function App() {
               <Login
                 {...props}
                 user={user}
+                email={email}
+                loggedInStatus={loggedIn}
+                handleLogin={handleLogin}
+                handleLogout={handleLogout}
+              />
+            )}
+          />
+          <Route
+            path="/profile"
+            render={(props) => (
+              <Profile
+                {...props}
+                user={user}
+                email={email}
                 loggedInStatus={loggedIn}
                 handleLogin={handleLogin}
                 handleLogout={handleLogout}

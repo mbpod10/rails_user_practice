@@ -21,6 +21,7 @@ const Home = (props) => {
 
   const handleSuccessfulAuth = (data) => {
     props.handleLogin(data);
+
     props.history.push("/dashboard");
   };
 
@@ -30,6 +31,8 @@ const Home = (props) => {
       .then((response) => {
         console.log("logout", response);
         props.handleLogout();
+        window.location.reload();
+        props.history.push("/");
       })
       .catch((error) => {
         console.log("Logout error", error);
@@ -75,6 +78,7 @@ const Home = (props) => {
   };
   return (
     <>
+      {props.email ? <h5>{props.email} Logged In</h5> : null}
       <h1>Home</h1>
       <Registration
         user={input}
@@ -86,7 +90,8 @@ const Home = (props) => {
       <button onClick={() => handleLogoutClick()}>Logout</button> <br />
       {/* <Login handleSuccessfulAuth={handleSuccessfulAuth} /> */}
       <Link to="/login">Login</Link> <br />
-      <Link to="/dashboard">Dashboard</Link>
+      <Link to="/dashboard">Dashboard</Link> <br />
+      <Link to="/profile"> View Profile</Link>
       <h4>{errorStatus}</h4>
     </>
   );
