@@ -60,10 +60,12 @@ const Home = (props) => {
         { withCredentials: true }
       )
       .then((resonse) => {
+        console.log("registration log", resonse);
         if (resonse.data.status === "created") {
           handleSuccessfulAuth(resonse.data);
+        } else {
+          setErrorStatus(resonse.data.status);
         }
-        console.log("registration log", resonse);
       })
       .catch((response) => {
         console.log("registration error", response);
