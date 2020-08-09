@@ -15,6 +15,8 @@ const Home = (props) => {
       password_confirmation: "",
     },
   });
+  const [errorStatus, setErrorStatus] = useState("");
+
   //const [user, setReview] = useState(null);
 
   const handleSuccessfulAuth = (data) => {
@@ -63,8 +65,10 @@ const Home = (props) => {
         }
         console.log("registration log", resonse);
       })
-      .catch((error) => {
-        console.log("registration error", error);
+      .catch((response) => {
+        console.log("registration error", response);
+        // console.log(response.data.status);
+        // setErrorStatus(response.data.status);
       });
   };
   return (
@@ -81,6 +85,7 @@ const Home = (props) => {
       {/* <Login handleSuccessfulAuth={handleSuccessfulAuth} /> */}
       <Link to="/login">Login</Link> <br />
       <Link to="/dashboard">Dashboard</Link>
+      <h4>{errorStatus}</h4>
     </>
   );
 };

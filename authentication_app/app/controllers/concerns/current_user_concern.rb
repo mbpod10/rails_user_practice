@@ -10,3 +10,7 @@ module CurrentUserConcern
         end
     end
 end
+
+
+# User.where(email: params['user']['email'])
+# User.where(email: "z")
