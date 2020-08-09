@@ -29,3 +29,28 @@ gem "rack-cors", :require => 'rack/cors'
 ```
 
 run `bundle` to install cors and brycrpt
+
+```
+rails g scaffold information name citizen:boolean age:integer marital_status address dependent:boolean
+```
+
+```
+rails g migration AddForeignKeyToInformation
+```
+
+```
+class AddForeignKeyToInformation < ActiveRecord::Migration[6.0]
+  def change
+    add_column :information, :user_id, :integer
+  end
+end
+
+```
+
+```
+Information.create([
+    {"name": "Brock Podgurski", "citizen":true, "age": 25,
+    "marital_status": "single", "address": "no", "dependent": false,
+    "user_id": 1 }
+])
+```

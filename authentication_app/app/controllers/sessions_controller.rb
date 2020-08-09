@@ -4,7 +4,8 @@ class SessionsController < ApplicationController
         user = User
             .find_by(email: params['user']['email'])
             .try(:authenticate, params['user']['password'])
-        
+            
+
         if user
             session[:user_id] = user.id
             render json: {
@@ -20,7 +21,7 @@ class SessionsController < ApplicationController
         if @current_user
             render json: {
                 logged_in: true,
-                user: @current_user
+                user: @current_user 
             }
         else
             render json: {

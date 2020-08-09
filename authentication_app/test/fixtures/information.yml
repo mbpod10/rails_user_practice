@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  citizen: false
+  age: 1
+  marital_status: MyString
+  address: MyString
+  dependent: false
+
+two:
+  name: MyString
+  citizen: false
+  age: 1
+  marital_status: MyString
+  address: MyString
+  dependent: false

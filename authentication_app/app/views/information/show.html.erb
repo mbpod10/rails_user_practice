@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @information.name %>
+</p>
+
+<p>
+  <strong>Citizen:</strong>
+  <%= @information.citizen %>
+</p>
+
+<p>
+  <strong>Age:</strong>
+  <%= @information.age %>
+</p>
+
+<p>
+  <strong>Marital status:</strong>
+  <%= @information.marital_status %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @information.address %>
+</p>
+
+<p>
+  <strong>Dependent:</strong>
+  <%= @information.dependent %>
+</p>
+
+<%= link_to 'Edit', edit_information_path(@information) %> |
+<%= link_to 'Back', information_index_path %>

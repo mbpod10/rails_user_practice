@@ -5,3 +5,9 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+Information.create([
+    {name: "Brock Podgurski", citizen:true, age: 25, 
+    marital_status: "single", address: "no", dependent: false, 
+    user_id: 1 }
+])
