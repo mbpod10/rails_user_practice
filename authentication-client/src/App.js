@@ -20,7 +20,7 @@ function App() {
       axios
         .get("http://localhost:3000/logged_in", { withCredentials: true })
         .then((response) => {
-          console.log("logged in?", response);
+          //console.log("logged in?", response);
           if (response.data.logged_in && loggedIn === "NOT_LOGGED_IN") {
             setLoggedIn("LOGGED_IN");
             setUser(response.data.user);
@@ -61,7 +61,7 @@ function App() {
           <Route
             path="/dashboard"
             render={(props) => (
-              <Dashboard {...props} loggedInStatus={loggedIn} />
+              <Dashboard {...props} loggedInStatus={loggedIn} user={user} />
             )}
           />
           <Route

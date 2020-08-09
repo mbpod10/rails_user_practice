@@ -69,6 +69,6 @@ class InformationController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def information_params
-      params.require(:information).permit(:name, :citizen, :age, :marital_status, :address, :dependent)
+      params.require(:information).permit(:name, :citizen, :age, :marital_status, :address, :dependent, :user_id)
     end
 end
