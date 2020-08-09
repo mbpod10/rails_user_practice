@@ -14,6 +14,7 @@ const Login = (props) => {
     },
   });
   //const [user, setReview] = useState(null);
+  const [errorStatus, setErrorStatus] = useState("");
 
   const handleSuccessfulAuth = (data) => {
     props.handleLogin(data);
@@ -43,10 +44,12 @@ const Login = (props) => {
         { withCredentials: true }
       )
       .then((resonse) => {
+        console.log("res from  login", resonse);
         if (resonse.data.logged_in) {
           handleSuccessfulAuth(resonse.data);
+        } else {
+          setErrorStatus(resonse.data.status);
         }
-        console.log("res from  login", resonse);
       })
       .catch((error) => {
         console.log("login error", error);
@@ -66,6 +69,7 @@ const Login = (props) => {
       {/* <h4>Status: {props.loggedInStatus}</h4> */}
       <Link to="/">Home</Link> <br />
       <Link to="/dashboard">Dashboard</Link>
+      <h4>{errorStatus}</h4>
     </>
   );
 };
