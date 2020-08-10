@@ -89,15 +89,17 @@ const Home = (props) => {
         />
       )}
       <h4>Status: {props.loggedInStatus}</h4>
-      <button onClick={() => handleLogoutClick()}>Logout</button> <br />
       {/* <Login handleSuccessfulAuth={handleSuccessfulAuth} /> */}
       {props.loggedInStatus === "LOGGED_IN" ? null : (
         <Link to="/login">Login</Link>
       )}{" "}
       <br />
-      <Link to="/dashboard">Dashboard</Link> <br />
       {props.loggedInStatus === "LOGGED_IN" ? (
-        <Link to={`/profile/${props.user.id}`}> View Profile</Link>
+        <>
+          <Link to={`/profile/${props.user.id}`}> View Profile</Link> <br />
+          <Link to="/dashboard">Dashboard</Link> <br />
+          <button onClick={() => handleLogoutClick()}>Logout</button> <br />
+        </>
       ) : null}
       <h4>{errorStatus}</h4>
     </>

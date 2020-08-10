@@ -72,7 +72,6 @@ const Dashboard = (props) => {
       <h4>Status: {props.loggedInStatus}</h4>
       <br />
       <Link to="/">Home</Link> <br />
-      <Link to="/login">Login</Link>
       <h3>Let's Add Some Information</h3>
       {props.user.information == null || props.user.information.length < 0 ? (
         <AddInfo

@@ -75,7 +75,6 @@ const Login = (props) => {
       <br />
       {/* <h4>Status: {props.loggedInStatus}</h4> */}
       <Link to="/">Home</Link> <br />
-      <Link to="/dashboard">Dashboard</Link>
       <h4>{errorStatus}</h4>
     </>
   );

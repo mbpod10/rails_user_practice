@@ -51,7 +51,6 @@ const Profile = (props) => {
       <h1>Page</h1>
       <h4>Status: {props.loggedInStatus}</h4>
       <Link to="/">Home</Link> <br />
-      <Link to="/login">Login</Link>
       {user ? informationArray : null}
     </>
   );
