@@ -150,19 +150,72 @@ as_json NOT to_json
 
 ```
 module CurrentUserConcern
-extend ActiveSupport::Concern
-included do
-before_action :set_current_user
-end
+    extend ActiveSupport::Concern
+    included do
+      before_action :set_current_user
+    end
 
     def set_current_user
         if session[:user_id]
          @current_user = User.find(session[:user_id]).as_json(include: :information)
         end
     end
-
 end
 
 ```
 
 When the User is sent the client, it will include the information array
+
+## Create Some Logic For User Registration
+
+- Go to `app/controllers/registrations_controller.b`
+
+```
+class RegistrationsController < ApplicationController
+    def create
+
+        #IF PASSWORD AND PASSWORD CONFIRMATION DON'T MATCH:
+
+        if params['user']['password'] != params['user']['password_confirmation']
+            render json: {
+                status: "Passwords Dont Match"
+            }
+
+        #IF EMAIL MATCHES EXISTING USER:
+
+         elsif User.where(email: params['user']['email']).first
+            render json: {
+                status: "Email Matches Current User"
+            }
+
+        #IF PASSWORD LENGTH IS NOT GREATER 6 CHARACTERS
+
+        elsif params['user']['password'].length < 6
+            render json: {
+                status: "Password Must Contain More Than 6 Characters"
+            }
+
+        #IF ALL THAT DOESN'T HAPPEN, CREATE USER
+
+
+        else user = User.create!(
+                email: params['user']['email'],
+                password: params['user']['password'],
+                password_confirmation: params['user']['password_confirmation']
+            )
+            if user
+                session[:user_id] = user.id
+                render json: {
+                    status: :created,
+                    user: user
+            }
+            else
+                render json: {status: 500, text: "not working"}
+            end
+        end
+    end
+end
+
+```
+
+- Errors will now be sent to the client that will allow it to be rendered on the app
