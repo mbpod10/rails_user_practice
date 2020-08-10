@@ -71,11 +71,11 @@ end
 
 ```
 User.create([
-    {email: "mb@gmail.com", password: "101010", password_confirmation: "101010" },
+    {email: "m@gmail.com", password: "101010", password_confirmation: "101010" },
     {email: "z", password: "101010", password_confirmation: "101010" }
 ])
 Information.create([
-    {name: "Ckorb", citizen:true, age: 25,
+    {name: "Ckorb Blansing", citizen:true, age: 25,
     marital_status: "single", address: "no", dependent: false,
     user_id: 1 }
 ])
@@ -83,11 +83,12 @@ Information.create([
 puts "Seed Created"
 ```
 
-run `rails db:seed` to populate database
+- NOTE: The second user does not have Information, this will be used to test Create Information client side
+  run `rails db:seed` to populate database
 
 ## Create User Routes To Show Relationship Between User and Information
 
-- in `routes.db` create the following routes
+- in `routes.rb` create the following routes
 
 ```
 resources :information
@@ -113,13 +114,41 @@ the `only: [:index, :show]` will only allow the api to show all the users and an
   end
   ```
 
-```
+  got to `"http://localhost:3000/users"` to verify information is connected to user as:
 
+  ```
+  [
+    {
+      "id": 1,
+      "email": "m@gmail.com",
+      "password_digest": "$2a$12$O1s5Bl3616IfjKJLYTJTEO/4OOMQrz71cpnx.0xGV/8rm9XkROE7G",
+      "created_at": "2020-08-09T21:12:37.746Z",
+      "updated_at": "2020-08-09T21:12:37.746Z",
+      "information": [
+        {
+            "id": 1,
+            "name": "Kcorb Blansing",
+            "citizen": true,
+            "age": 25,
+            "marital_status": "single",
+            "address": "no",
+            "dependent": false,
+            "created_at": "2020-08-09T21:12:37.986Z",
+            "updated_at": "2020-08-09T21:12:37.986Z",
+            "user_id": 1
+        }
+      ]
+    }
+  ]
+  ```
+
+## Send Full User, Including Information, To the Client
+
+In `app/controllers/concerns/current_user_concertn.rb` :
 change user concern so user infomation table is sent to client
 as_json NOT to_json
 
 ```
-
 module CurrentUserConcern
 extend ActiveSupport::Concern
 included do
@@ -136,4 +165,4 @@ end
 
 ```
 
-```
+When the User is sent the client, it will include the information array
