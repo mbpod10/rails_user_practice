@@ -11,7 +11,7 @@ API IS ON PORT 3000
 REACT APP ON PORT 3001
 
 ```
-rails new authentication_app -d postgresql --skip-git
+.git
 ```
 
 skip `-api` flag so you can properly use session for user authentication. This will create
@@ -39,15 +39,44 @@ run `bundle` to install cors and brycrpt
 - Create User model that includes email and password_digest for bcrypt
 
 ```
-rails g user email password_digest
+rails g model User email password_digest
 ```
 
 run `rails db:migrate`
+
+- Create User
+  run `rails c`
+
+```
+User.create!(email: "hack@gmail.com", password: "101010", password_confirmation: "101010")
+```
+
+- Check to See If Sessions Route works
+  run `rails s` to start server
+  run following command in different terminal but in api application
+  LOGIN:
+
+```
+curl --header "Content-Type: application/json" --request POST --data '{"user": {"email": "hack@gmail.com", "password": "101010"}}' http://localhost:3000/sessions
+```
+
+Should get a return such as:
+
+```
+{"status":"created","logged_in":true,"user":{"id":1,"email":"hack@gmail.com","password_digest":"$2a$12$9nCPtQyX2nbig72KCDHGN.nSZVJOlyuFki0HDuhVGIySjtOEN94gG","created_at":"2020-08-11T12:50:06.881Z","updated_at":"2020-08-11T12:50:06.881Z"}}
+```
+
+REGISTER:
+
+```
+curl --header "Content-Type: application/json" --request POST --data '{"user": {"email": "bore@gmail.com", "password": "101010", "password_confirmation": "101010"}}' http://localhost:3000/registrations
+```
 
 - Create Information Model that will have a relationship with user
 
 ```
 rails g scaffold information name citizen:boolean age:integer marital_status address dependent:boolean
+rails g scaffold tax_info wages:integer capital_gains:integer unemployment:integer
 ```
 
 run `rails db:migrate`
@@ -168,7 +197,7 @@ When the User is sent the client, it will include the information array
 
 ## Create Some Logic For User Registration
 
-- Go to `app/controllers/registrations_controller.b`
+- Go to `app/controllers/registrations_controller.rb`
 
 ```
 class RegistrationsController < ApplicationController
@@ -219,3 +248,40 @@ end
 ```
 
 - Errors will now be sent to the client that will allow it to be rendered on the app
+
+## How to get this out of users route???
+
+```
+[
+  {
+    id: 1,
+    email: "m@gmail.com",
+    password_digest: "101010",
+    created_at: "2020-08-11T01:27:31.956Z",
+    updated_at: "2020-08-11T01:27:31.956Z",
+    information: {
+      id: 1,
+      name: "Ckorb Blansing",
+      citizen: true,
+      age: 25,
+      marital_status: "single",
+      address: "no",
+      dependent: false,
+      created_at: "2020-08-11T01:27:31.978Z",
+      updated_at: "2020-08-11T01:27:31.978Z",
+      user_id: 1,
+      tax_infos: [
+        {
+          id: 1,
+          wages: 21000,
+          capital_gains: 5000,
+          unemployment: 0,
+          created_at: "2020-08-11T01:27:32.002Z",
+          updated_at: "2020-08-11T01:27:32.002Z",
+          information_id: 1,
+        },
+      ],
+    },
+  },
+];
+```
